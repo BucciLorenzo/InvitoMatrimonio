@@ -37,9 +37,16 @@
       justify-content: center;
       padding: 24px;
       overflow-x: hidden;
+      overflow-y: hidden; /* Blocca lo scroll inizialmente quando c'è la busta */
       position: relative;
     }
 
+    /* Stato attivato da JavaScript dopo l'apertura della busta per ripristinare lo scroll */
+    body.scroll-allowed {
+      overflow-y: auto;
+    }
+
+    /* Lo sfondo sfocato sotto rimane totalmente fisso */
     body::before {
       content: '';
       position: fixed;
@@ -48,11 +55,12 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
+      background-attachment: fixed; /* Blocca l'immagine durante lo scroll */
       filter: blur(18px) brightness(1.1);
-      transform: scale(1.05);
       z-index: -2;
     }
 
+    /* Lo sfondo principale nitido sopra rimane totalmente fisso */
     body::after {
       content: '';
       position: fixed;
@@ -63,16 +71,20 @@
       background-repeat: no-repeat;
       background-position: center top;
       background-size: auto 100%;
+      background-attachment: fixed; /* Blocca l'immagine durante lo scroll */
       z-index: -1;
     }
 
     @media(max-width: 768px) {
       body::after {
-        background-size: cover;
-        background-position: top center;
+        background-size: contain; 
+        background-position: center center;
+        background-color: var(--cream); 
+        background-attachment: fixed;
       }
       body::before {
-        filter: blur(12px) brightness(1.1);
+        filter: blur(8px) brightness(1.1); 
+        background-attachment: fixed;
       }
     }
 
@@ -88,7 +100,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 1100; /* Sopra le modali per far vedere i coriandoli */
+      z-index: 1100; 
     }
 
     /* ── SCRITTA SAVE THE DATE sopra la busta ── */
@@ -124,6 +136,8 @@
       border-radius: 4px;
       box-shadow: 0 30px 80px rgba(100, 50, 20, .12);
       overflow: hidden;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     @keyframes cardIn {
@@ -145,7 +159,7 @@
       to { opacity: 1; transform: none }
     }
 
-    /* ── BUSTA RE-STYLING ELEGANTE ── */
+    /* ── BUSTA ELEGANTE ── */
     .envelope-scene {
       max-width: 420px;
       margin: 0 auto 12px;
@@ -395,7 +409,7 @@
       font-family: 'Cormorant SC', serif;
     }
 
-    /* ── CONTENUTO ── */
+    /* ── CONTENUTO INVITO ── */
     .content-inner {
       padding: 32px 32px 48px
     }
@@ -512,7 +526,6 @@
       border: none
     }
 
-    /* Gestione Hover sicura per desktop */
     @media (hover: hover) {
       .aBtn:hover {
         transform: translateY(-2px);
@@ -538,7 +551,7 @@
       box-shadow: 0 4px 16px rgba(90, 130, 80, .22)
     }
 
-    /* ── POPUP IN SOVRAIMPRESSIONE (MODALE PARTECIPAZIONE / ASSENZA) ── */
+    /* ── POPUP MODALI ── */
     .overlay-modal {
       position: fixed;
       inset: 0;
@@ -614,7 +627,6 @@
       gap: 12px;
     }
 
-    /* Pulsanti Canali Interni */
     .sub-channel-btn {
       display: block;
       padding: 14px 20px;
@@ -634,7 +646,6 @@
       box-shadow: 0 2px 8px rgba(160, 60, 10, 0.04);
     }
 
-    /* Effetto Hover ESCLUSIVO per Desktop (Mouse attivo) */
     @media (hover: hover) {
       .sub-channel-btn:hover {
         background-color: var(--orange) !important;
@@ -644,7 +655,6 @@
       }
     }
 
-    /* Effetto tocco istantaneo ESCLUSIVO per Mobile */
     .sub-channel-btn:active {
       background-color: var(--orange) !important;
       color: #fff !important;
@@ -695,10 +705,9 @@
   <canvas id="bg"></canvas>
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- 1. POPUP IN SOVRAIMPRESSIONE (CONFERMA PARTECIPAZIONE) -->
   <div class="overlay-modal" id="modalConfirm">
     <div class="modal-box">
-      <button class="modal-close" id="closeConfirmBtn">&times;</button>
+      <button class="modal-close" id="closeConfirmBtn">×</button>
       <div class="modal-title">Invia la tua Conferma</div>
       <div class="modal-desc">Scegli a chi inviare il messaggio di conferma su WhatsApp:</div>
       <div class="modal-channels">
@@ -708,10 +717,9 @@
     </div>
   </div>
 
-  <!-- 2. POPUP IN SOVRAIMPRESSIONE (RIFIUTO PARTECIPAZIONE) -->
   <div class="overlay-modal" id="modalDecline">
     <div class="modal-box">
-      <button class="modal-close" id="closeDeclineBtn">&times;</button>
+      <button class="modal-close" id="closeDeclineBtn">×</button>
       <div class="modal-title">Invia il tuo Messaggio</div>
       <div class="modal-desc">Scegli a chi comunicare la tua assenza su WhatsApp:</div>
       <div class="modal-channels">
@@ -725,7 +733,6 @@
 
     <div class="ribbon-envelope">✦ Save the Date ✦</div>
 
-    <!-- SCHERMATA BUSTA -->
     <section class="intro-screen" style="padding:0 24px 32px">
       <div class="envelope-scene">
         <div class="envelope" id="envelope">
@@ -762,7 +769,6 @@
       <p class="env-caption">Hai ricevuto un invito speciale</p>
     </section>
 
-    <!-- INVITO -->
     <section class="content-screen" id="contentScreen">
       <div class="content-inner">
 
@@ -776,7 +782,6 @@
           <div class="divider-line"></div>
         </div>
 
-        <!-- INFO -->
         <div>
           <div class="info-line">Domenica 31 Maggio 2026</div>
           <div class="info-line">Alle ore 11.30</div>
@@ -799,7 +804,6 @@
           <div class="divider-line"></div>
         </div>
 
-        <!-- BOTTONI -->
         <div class="btns">
           <a class="aBtn outline" href="https://maps.google.com/maps?q=Reggia+dei+Tessali+Ginosa+Taranto"
             target="_blank">
@@ -812,13 +816,9 @@
             Mappa
           </a>
           
-          <!-- Partecipo (apre modale partecipazione) -->
           <button class="aBtn" id="btnPartecipo">Partecipo 🥂</button>
-          
-          <!-- Non partecipo (apre modale assenza) -->
           <button class="aBtn grey" id="btnNonPartecipo">Non partecipo</button>
           
-          <!-- Regalo (Link diretto WhatsApp con nuovo numero di Gaetano) -->
           <a class="aBtn green" id="btnRegalo"
             href="https://wa.me/393487521984?text=Ciao%20Gaetano!%20Vorrei%20contribuire%20al%20vostro%20viaggio%20dei%20sogni%20%F0%9F%8E%81"
             target="_blank">
@@ -835,10 +835,9 @@
 
       </div>
 
-      <!-- Contatti visibili a fondo pagina -->
       <div class="contacts">
-        <span>Gaetano &nbsp;348 7521984</span>
-        <span>Rogena &nbsp;334 9494887</span>
+        <span>Gaetano  348 7521984</span>
+        <span>Rogena  334 9494887</span>
       </div>
     </section>
 
@@ -908,8 +907,13 @@
 
     // ── APERTURA BUSTA ──
     document.getElementById('openBtn').addEventListener('click', () => {
-      playRustle(); document.getElementById('envelope').classList.add('opening');
-      setTimeout(() => { document.getElementById('card').classList.add('opened'); }, 900);
+      playRustle(); 
+      document.getElementById('envelope').classList.add('opening');
+      
+      setTimeout(() => { 
+        document.getElementById('card').classList.add('opened'); 
+        document.body.classList.add('scroll-allowed'); // Consente lo scroll verticale SOLO ora che la busta si è aperta
+      }, 900);
     });
 
     // ── GESTIONE MODALE 1: PARTECIPO ──
@@ -920,7 +924,6 @@
       modalConfirm.classList.add('active');
     });
 
-    // Quando cliccano sulla scelta del partner per festeggiare, partono i coriandoli
     document.querySelectorAll('.confirm-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         shootConfetti(window.innerWidth / 2, window.innerHeight / 2);
@@ -940,7 +943,6 @@
       modalDecline.classList.add('active');
     });
 
-    // Cliccando su un link di assenza si chiude semplicemente la modale
     document.querySelectorAll('#modalDecline .sub-channel-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         setTimeout(() => { modalDecline.classList.remove('active'); }, 400);
