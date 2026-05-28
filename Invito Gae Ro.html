@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Save the Date – Gaetano & Rogena</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght=300;400;500;600;700&family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght=300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --terra: #c97d4a;
+      --terradark: #8a5030;
+      --terralight: #e8a878;
+      --sage: #7a9a7a;
+      --sagelight: #a8c4a0;
+      --cream: #faf6f0;
+      --creamdk: #ede4dc;
+      --text: #3a2a1a;
+      --textlt: #7a6050;
+      --orange: #a04010; /* Arancione Terracotta Profondo */
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Cormorant SC', serif;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('sfondo.jpeg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      filter: blur(18px) brightness(1.1);
+      transform: scale(1.05);
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.08)),
+        url('sfondo.jpeg');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: auto 100%;
+      z-index: -1;
+    }
+
+    @media(max-width: 768px) {
+      body::after {
+        background-size: cover;
+        background-position: top center;
+      }
+      body::before {
+        filter: blur(12px) brightness(1.1);
+      }
+    }
+
+    canvas#bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+
+    canvas#confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1100; /* Sopra le modali per far vedere i coriandoli */
+    }
+
+    /* ── SCRITTA SAVE THE DATE sopra la busta ── */
+    .ribbon-envelope {
+      padding: 14px 0 6px;
+      font-size: 11px;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-family: 'Cormorant SC', serif;
+      font-weight: 600;
+      text-align: center;
+      background: transparent;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      text-align: center;
+      animation: cardIn .9s cubic-bezier(.22, 1, .36, 1) both;
+      overflow: visible;
+    }
+
+    .card.opened {
+      background: rgba(255, 252, 248, .93);
+      border: 1px solid rgba(196, 140, 100, .22);
+      border-radius: 4px;
+      box-shadow: 0 30px 80px rgba(100, 50, 20, .12);
+      overflow: hidden;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px) }
+      to { opacity: 1; transform: none }
+    }
+
+    .intro-screen { display: block }
+    .card.opened .intro-screen { display: none }
+
+    .content-screen {
+      display: none;
+      animation: fadeUp .7s cubic-bezier(.22, 1, .36, 1) both
+    }
+    .card.opened .content-screen { display: block }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px) }
+      to { opacity: 1; transform: none }
+    }
+
+    /* ── BUSTA RE-STYLING ELEGANTE ── */
+    .envelope-scene {
+      max-width: 420px;
+      margin: 0 auto 12px;
+      padding: 0 24px
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      padding-bottom: 63%;
+      perspective: 800px;
+    }
+
+    .env-body {
+      overflow: hidden;
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(160, 80, 30, 0.15);
+      border-radius: 4px;
+      background: linear-gradient(145deg, #fdfbf7, #f4eee4);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.95),
+        0 10px 30px rgba(160, 80, 30, 0.08),
+        0 20px 48px rgba(0, 0, 0, 0.06);
+    }
+
+    .env-tri-left {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-bottom: 132px solid #e2cfbe;
+      border-right: 210px solid transparent;
+      z-index: 1;
+      filter: drop-shadow(2px -2px 3px rgba(0,0,0,0.02));
+    }
+
+    .env-tri-right {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-bottom: 132px solid #e2cfbe;
+      border-left: 210px solid transparent;
+      z-index: 1;
+      filter: drop-shadow(-2px -2px 3px rgba(0,0,0,0.02));
+    }
+
+    .env-bottom {
+      position: absolute;
+      bottom: -1px;
+      left: -1px;
+      right: -1px;
+      overflow: hidden;
+      height: 53%;
+      z-index: 2
+    }
+
+    .env-bottom::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-left: 210px solid transparent;
+      border-right: 210px solid transparent;
+      border-bottom: 130px solid #dbbeaa;
+      filter: drop-shadow(0px -3px 5px rgba(0,0,0,0.04));
+    }
+
+    .env-flap {
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      height: 54%;
+      z-index: 4;
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transition: transform .75s cubic-bezier(.22, 1, .36, 1);
+      overflow: hidden;
+    }
+
+    .env-flap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      border-left: 210px solid transparent;
+      border-right: 210px solid transparent;
+      border-top: 146px solid #cd9b7a;
+      filter: drop-shadow(0px 4px 5px rgba(100, 40, 10, 0.15));
+    }
+
+    .env-flap::after {
+      content: '';
+      position: absolute;
+      top: 144px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent 4%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0.3) 70%, transparent 96%)
+    }
+
+    .env-seal {
+      position: absolute;
+      left: 50%;
+      bottom: 14%;
+      transform: translateX(-50%);
+      z-index: 6;
+      transition: opacity .3s, transform .3s
+    }
+
+    .seal-btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: none;
+      outline: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      animation: sealPulse 2.5s ease-in-out infinite;
+      position: relative;
+      filter: drop-shadow(0 6px 16px rgba(100,30,5,.5));
+    }
+
+    .seal-btn img {
+      mix-blend-mode: multiply;
+      filter: contrast(1.15) saturate(1.1);
+      border-radius: 50%;
+      object-fit: cover;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    @keyframes sealPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 5px 14px rgba(100,30,5,.45)); }
+      50% { transform: scale(1.05); filter: drop-shadow(0 8px 22px rgba(140,40,10,.6)); }
+    }
+
+    .seal-btn:hover { animation: none; transform: scale(1.08) }
+    .seal-btn:active { animation: none; transform: scale(.95) }
+
+    .envelope.opening .env-flap { transform: rotateX(-180deg) }
+    .envelope.opening .env-seal { opacity: 0; transform: translateX(-50%) scale(.65) }
+
+    .letter-pop {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translateX(-50%) translateY(0);
+      width: 72%;
+      background: #fffcf8;
+      border: 1px solid #e8ddd5;
+      border-radius: 3px;
+      box-shadow: 0 4px 22px rgba(140, 80, 80, .1);
+      z-index: 3;
+      padding: 14px 16px 12px;
+      opacity: 0;
+      transition: transform .55s .4s cubic-bezier(.22, 1, .36, 1), opacity .45s .4s;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(transparent, transparent 19px, #f0e8e0 19px, #f0e8e0 20px)
+    }
+
+    .envelope.opening .letter-pop {
+      transform: translateX(-50%) translateY(-92%);
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .lp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #f0e4dc
+    }
+
+    .lp-from {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      color: var(--orange);
+      font-style: italic;
+      line-height: 1.5
+    }
+
+    .lp-stamp {
+      width: 26px;
+      height: 32px;
+      border: 1px solid #ddd0c4;
+      border-radius: 2px;
+      background: linear-gradient(135deg, #f0e0d4, #e8cfc0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px
+    }
+
+    .lp-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .lp-line { height: 3px; border-radius: 2px; background: #ecddd4 }
+    .lp-line.d { background: #ddd0c8 }
+    .lp-line.f { width: 100% }
+    .lp-line.m { width: 80% }
+    .lp-line.s { width: 56% }
+    .lp-line.xs { width: 38% }
+
+    .lp-footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid #f0e4dc;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end
+    }
+
+    .lp-sign {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-style: italic;
+      color: var(--orange);
+      line-height: 1.4
+    }
+
+    .env-caption {
+      margin: 14px 0 28px;
+      color: var(--textlt);
+      font-size: .84rem;
+      letter-spacing: .05em;
+      font-family: 'Cormorant SC', serif;
+    }
+
+    /* ── CONTENUTO ── */
+    .content-inner {
+      padding: 32px 32px 48px
+    }
+
+    .script-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--orange);
+      line-height: 1.1;
+      margin-bottom: 6px
+    }
+
+    .announce {
+      font-size: .68rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 18px;
+      font-family: 'Cormorant SC', serif;
+    }
+
+    .names {
+      font-family: 'Cormorant SC', serif;
+      font-size: clamp(1.8rem, 5.5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 26px
+    }
+
+    .amp {
+      color: var(--orange);
+      font-style: italic;
+      font-weight: 300;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: .05em
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      max-width: 260px;
+      margin: 0 auto 24px
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--orange), transparent)
+    }
+
+    .divider-ornament {
+      color: var(--orange);
+      font-size: 14px
+    }
+
+    .info-line {
+      font-size: .74rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 2.2;
+      font-weight: 500;
+      font-family: 'Cormorant SC', serif;
+    }
+
+    .info-line.small {
+      font-size: .66rem;
+      color: var(--textlt);
+      letter-spacing: .14em;
+      line-height: 2
+    }
+
+    .info-line.note {
+      font-size: .67rem;
+      color: var(--textlt);
+      letter-spacing: .08em;
+      line-height: 1.9;
+      font-weight: 400;
+      text-transform: none;
+      font-style: italic;
+      margin-top: 14px;
+      padding: 0 12px;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 28px
+    }
+
+    .aBtn {
+      padding: 12px 22px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, var(--orange), #80300a);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 600;
+      font-family: 'Cormorant SC', serif;
+      text-decoration: none;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 16px rgba(160, 60, 10, .22);
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+      border: none
+    }
+
+    /* Gestione Hover sicura per desktop */
+    @media (hover: hover) {
+      .aBtn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(160, 60, 10, .32)
+      }
+      .aBtn.outline:hover { background: rgba(160, 64, 16, .08) }
+    }
+
+    .aBtn.outline {
+      background: transparent;
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      box-shadow: none
+    }
+
+    .aBtn.grey {
+      background: linear-gradient(135deg, #c0b8b4, #a09090);
+      box-shadow: none
+    }
+
+    .aBtn.green {
+      background: linear-gradient(135deg, var(--sage), #5a7a5a);
+      box-shadow: 0 4px 16px rgba(90, 130, 80, .22)
+    }
+
+    /* ── POPUP IN SOVRAIMPRESSIONE (MODALE PARTECIPAZIONE / ASSENZA) ── */
+    .overlay-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 42, 26, 0.55);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1050;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 20px;
+    }
+
+    .overlay-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: #fffcf8;
+      border: 1px solid rgba(196, 140, 100, .25);
+      border-radius: 6px;
+      padding: 32px 24px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(70, 30, 10, 0.25);
+      text-align: center;
+      position: relative;
+      transform: scale(0.9) translateY(15px);
+      transition: transform 0.4s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .overlay-modal.active .modal-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      color: var(--textlt);
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--orange); }
+
+    .modal-title {
+      font-family: 'Cormorant SC', serif;
+      font-size: 1.35rem;
+      color: var(--orange);
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .modal-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--textlt);
+      margin-bottom: 24px;
+    }
+
+    .modal-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Pulsanti Canali Interni */
+    .sub-channel-btn {
+      display: block;
+      padding: 14px 20px;
+      font-size: 0.76rem;
+      letter-spacing: .12em;
+      border-radius: 3px;
+      font-family: 'Cormorant SC', serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      border: 1px solid var(--orange);
+      background-color: #fffcf8;
+      color: var(--orange);
+      box-shadow: 0 2px 8px rgba(160, 60, 10, 0.04);
+    }
+
+    /* Effetto Hover ESCLUSIVO per Desktop (Mouse attivo) */
+    @media (hover: hover) {
+      .sub-channel-btn:hover {
+        background-color: var(--orange) !important;
+        color: #fff !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(160, 60, 10, 0.15);
+      }
+    }
+
+    /* Effetto tocco istantaneo ESCLUSIVO per Mobile */
+    .sub-channel-btn:active {
+      background-color: var(--orange) !important;
+      color: #fff !important;
+      transform: scale(0.98);
+    }
+
+    .contacts {
+      display: flex;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-top: 1px solid rgba(160, 64, 16, .2);
+      font-size: .63rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--textlt);
+      font-family: 'Cormorant SC', serif;
+    }
+
+    @media(max-width:560px) {
+      .content-inner { padding: 28px 18px 36px }
+      .aBtn { width: 100%; text-align: center }
+      .env-tri-left { border-right-width: 50vw; border-bottom-width: 33vw }
+      .env-tri-right { border-left-width: 50vw; border-bottom-width: 33vw }
+      .env-flap::before, .env-bottom::after { border-left-width: 50vw; border-right-width: 50vw }
+      .env-flap::before { border-top-width: 34vw }
+      .env-flap::after { top: calc(34vw - 2px) }
+      .env-bottom::after { border-bottom-width: 31vw }
+      .contacts { flex-direction: column; gap: 8px; align-items: center; text-align: center }
+    }
+
+    .sigillo-img {
+      width: 75px;
+      height: auto;
+      display: block;
+    }
+
+    .env-seal {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- 1. POPUP IN SOVRAIMPRESSIONE (CONFERMA PARTECIPAZIONE) -->
+  <div class="overlay-modal" id="modalConfirm">
+    <div class="modal-box">
+      <button class="modal-close" id="closeConfirmBtn">&times;</button>
+      <div class="modal-title">Invia la tua Conferma</div>
+      <div class="modal-desc">Scegli a chi inviare il messaggio di conferma su WhatsApp:</div>
+      <div class="modal-channels">
+        <a class="sub-channel-btn confirm-btn" id="confermaGaetano" href="#" target="_blank">Invia a Gaetano 🤵‍♂️</a>
+        <a class="sub-channel-btn confirm-btn" id="confermaRogena" href="#" target="_blank">Invia a Rogena 👰‍♀️</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. POPUP IN SOVRAIMPRESSIONE (RIFIUTO PARTECIPAZIONE) -->
+  <div class="overlay-modal" id="modalDecline">
+    <div class="modal-box">
+      <button class="modal-close" id="closeDeclineBtn">&times;</button>
+      <div class="modal-title">Invia il tuo Messaggio</div>
+      <div class="modal-desc">Scegli a chi comunicare la tua assenza su WhatsApp:</div>
+      <div class="modal-channels">
+        <a class="sub-channel-btn" id="rifiutoGaetano" href="#" target="_blank">Invia a Gaetano 🤵‍♂️</a>
+        <a class="sub-channel-btn" id="rifiutoRogena" href="#" target="_blank">Invia a Rogena 👰‍♀️</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="card" id="card">
+
+    <div class="ribbon-envelope">✦ Save the Date ✦</div>
+
+    <!-- SCHERMATA BUSTA -->
+    <section class="intro-screen" style="padding:0 24px 32px">
+      <div class="envelope-scene">
+        <div class="envelope" id="envelope">
+          <div class="env-body"></div>
+          <div class="env-tri-left"></div>
+          <div class="env-tri-right"></div>
+          <div class="env-bottom"></div>
+          <div class="env-flap"></div>
+          <div class="letter-pop">
+            <div class="lp-header">
+              <div class="lp-from">Cara amica,<br>sei invitata…</div>
+              <div class="lp-stamp">💌</div>
+            </div>
+            <div class="lp-lines">
+              <div class="lp-line d f"></div>
+              <div class="lp-line m"></div>
+              <div class="lp-line f"></div>
+              <div class="lp-line s"></div>
+              <div class="lp-line f"></div>
+              <div class="lp-line xs"></div>
+            </div>
+            <div class="lp-footer">
+              <div class="lp-sign">Con amore,<br><strong>Gaetano & Rogena</strong></div>
+              <div style="font-size:13px;opacity:.6;padding-bottom:2px">🤍</div>
+            </div>
+          </div>
+          <div class="env-seal">
+            <button class="seal-btn" id="openBtn">
+              <img src="sigillo.png" alt="Sigillo" class="sigillo-img">
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="env-caption">Hai ricevuto un invito speciale</p>
+    </section>
+
+    <!-- INVITO -->
+    <section class="content-screen" id="contentScreen">
+      <div class="content-inner">
+
+        <div class="script-title">save the date</div>
+        <div class="announce">annunciano il loro matrimonio</div>
+        <div class="names">Gaetano <span class="amp">&</span> Rogena</div>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-ornament">✦</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- INFO -->
+        <div>
+          <div class="info-line">Domenica 31 Maggio 2026</div>
+          <div class="info-line">Alle ore 11.30</div>
+          <br>
+          <div class="info-line small">Presso la Sala Ricevimenti</div>
+          <div class="info-line">Reggia dei Tessali</div>
+          <div class="info-line small">( S.da Statale 106 Jonica, 74013 Ginosa - TA )</div>
+          <br>
+          <div class="info-line small">Dove al termine del rito celebrativo</div>
+          <div class="info-line small">proseguiranno i festeggiamenti</div>
+          <div class="info-line note">
+            È gradita gentile conferma entro il 30 aprile<br>
+            Specificare eventuali intolleranze o allergie
+          </div>
+        </div>
+
+        <div class="divider" style="margin-top:24px">
+          <div class="divider-line"></div>
+          <div class="divider-ornament">✦</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- BOTTONI -->
+        <div class="btns">
+          <a class="aBtn outline" href="https://maps.google.com/maps?q=Reggia+dei+Tessali+Ginosa+Taranto"
+            target="_blank">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+              style="display:inline;vertical-align:middle;margin-right:5px">
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
+                fill="var(--orange)" />
+            </svg>
+            Mappa
+          </a>
+          
+          <!-- Partecipo (apre modale partecipazione) -->
+          <button class="aBtn" id="btnPartecipo">Partecipo 🥂</button>
+          
+          <!-- Non partecipo (apre modale assenza) -->
+          <button class="aBtn grey" id="btnNonPartecipo">Non partecipo</button>
+          
+          <!-- Regalo (Link diretto WhatsApp con nuovo numero di Gaetano) -->
+          <a class="aBtn green" id="btnRegalo"
+            href="https://wa.me/393487521984?text=Ciao%20Gaetano!%20Vorrei%20contribuire%20al%20vostro%20viaggio%20dei%20sogni%20%F0%9F%8E%81"
+            target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+              style="display:inline;vertical-align:middle;margin-right:5px">
+              <rect x="2" y="9" width="20" height="13" rx="2" stroke="#fff" stroke-width="1.8" fill="none"/>
+              <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M12 13v4M10 15h4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M2 13h20" stroke="#fff" stroke-width="1.5"/>
+            </svg>
+            Regalo
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Contatti visibili a fondo pagina -->
+      <div class="contacts">
+        <span>Gaetano &nbsp;348 7521984</span>
+        <span>Rogena &nbsp;334 9494887</span>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ── SFONDO ACQUERELLO ──
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let W, H; let blobs = []; let animFrameId = null;
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    const BCOLORS = ['#a0401033', '#7a9a7a22', '#c97d4a22', '#a8c4a022', '#e89a6a18', '#8aaa8822'];
+    const FIXED_BLOBS = [
+      { px: .10, py: .12, r: 220, vx: .06, vy: .08, ci: 0 }, { px: .85, py: .08, r: 180, vx: -.05, vy: .10, ci: 1 },
+      { px: .50, py: .20, r: 260, vx: .04, vy: .07, ci: 2 }, { px: .20, py: .45, r: 190, vx: .07, vy: -.06, ci: 3 },
+      { px: .75, py: .38, r: 210, vx: -.06, vy: .09, ci: 4 }
+    ];
+    function Blob(def) {
+      this.x = def.px * W; this.y = def.py * H; this.r = def.r; this.vx = def.vx; this.vy = def.vy; this.color = BCOLORS[def.ci]; this.px = def.px;
+      this.reset = function () { this.x = this.px * W; this.y = this.vy > 0 ? -80 : H + 80; };
+    }
+    function drawBg() {
+      ctx.clearRect(0, 0, W, H);
+      blobs.forEach(b => {
+        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r); g.addColorStop(0, b.color); g.addColorStop(1, 'transparent');
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill(); b.x += b.vx; b.y += b.vy;
+        if (b.y < -220 || b.y > H + 220) b.reset();
+      });
+      animFrameId = requestAnimationFrame(drawBg);
+    }
+    resize(); FIXED_BLOBS.forEach(def => blobs.push(new Blob(def))); drawBg(); window.addEventListener('resize', resize);
+
+    // ── CORIANDOLI ──
+    const cCanvas = document.getElementById('confetti-canvas'); const cCtx = cCanvas.getContext('2d'); let confettis = [];
+    function resizeC() { cCanvas.width = window.innerWidth; cCanvas.height = window.innerHeight; }
+    resizeC(); window.addEventListener('resize', resizeC);
+    const PCOLS = ['#a04010', '#e8956a', '#7a9a7a', '#f5c070', '#e8d4c8', '#fff'];
+    function Confetto(x, y) {
+      this.x = x || Math.random() * cCanvas.width; this.y = y || -10; this.w = 6 + Math.random() * 8; this.h = 3 + Math.random() * 5;
+      this.color = PCOLS[Math.floor(Math.random() * PCOLS.length)]; this.rot = Math.random() * 360; this.vx = (Math.random() - .5) * 7;
+      this.vy = 3 + Math.random() * 5; this.vr = (Math.random() - .5) * 7; this.gravity = .12; this.alive = true;
+    }
+    function shootConfetti(ox, oy) {
+      for (let i = 0; i < 110; i++) { const c = new Confetto(ox, oy); c.vy = -(5 + Math.random() * 10); c.vx = (Math.random() - .5) * 13; confettis.push(c); }
+      animateC();
+    }
+    function animateC() {
+      cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height); confettis = confettis.filter(c => c.alive);
+      confettis.forEach(c => {
+        c.vy += c.gravity; c.x += c.vx; c.y += c.vy; c.rot += c.vr; if (c.y > cCanvas.height + 20) c.alive = false;
+        cCtx.save(); cCtx.globalAlpha = .85; cCtx.translate(c.x, c.y); cCtx.rotate(c.rot * Math.PI / 180); cCtx.fillStyle = c.color; cCtx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h); cCtx.restore();
+      });
+      if (confettis.length > 0) requestAnimationFrame(animateC);
+    }
+
+    // ── FRUSCIO ──
+    function playRustle() {
+      try {
+        const ac = new (window.AudioContext || window.webkitAudioContext)(); const dur = 1.4, buf = ac.createBuffer(1, ac.sampleRate * dur, ac.sampleRate);
+        const d = buf.getChannelData(0); for (let i = 0; i < d.length; i++)d[i] = (Math.random() * 2 - 1);
+        const src = ac.createBufferSource(); src.buffer = buf; const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.6;
+        const g = ac.createGain(); g.gain.setValueAtTime(0, ac.currentTime); g.gain.linearRampToValueAtTime(0.14, ac.currentTime + .06); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + dur);
+        src.connect(bp); bp.connect(g); g.connect(ac.destination); src.start(); src.stop(ac.currentTime + dur);
+      } catch (e) { }
+    }
+
+    // ── APERTURA BUSTA ──
+    document.getElementById('openBtn').addEventListener('click', () => {
+      playRustle(); document.getElementById('envelope').classList.add('opening');
+      setTimeout(() => { document.getElementById('card').classList.add('opened'); }, 900);
+    });
+
+    // ── GESTIONE MODALE 1: PARTECIPO ──
+    const modalConfirm = document.getElementById('modalConfirm');
+    document.getElementById('btnPartecipo').addEventListener('click', () => {
+      document.getElementById('confermaGaetano').href = "https://wa.me/393487521984?text=" + encodeURIComponent("Ciao Gaetano! Ti confermo con grandissimo piacere la mia partecipazione al vostro matrimonio! 🥂✨");
+      document.getElementById('confermaRogena').href = "https://wa.me/393349494887?text=" + encodeURIComponent("Ciao Rogena! Ti confermo con grandissimo piacere la mia partecipazione al vostro matrimonio! 🥂✨");
+      modalConfirm.classList.add('active');
+    });
+
+    // Quando cliccano sulla scelta del partner per festeggiare, partono i coriandoli
+    document.querySelectorAll('.confirm-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        shootConfetti(window.innerWidth / 2, window.innerHeight / 2);
+        setTimeout(() => { modalConfirm.classList.remove('active'); }, 400);
+      });
+    });
+
+    document.getElementById('closeConfirmBtn').addEventListener('click', () => modalConfirm.classList.remove('active'));
+    modalConfirm.addEventListener('click', (e) => { if (e.target === modalConfirm) modalConfirm.classList.remove('active'); });
+
+
+    // ── GESTIONE MODALE 2: NON PARTECIPO ──
+    const modalDecline = document.getElementById('modalDecline');
+    document.getElementById('btnNonPartecipo').addEventListener('click', () => {
+      document.getElementById('rifiutoGaetano').href = "https://wa.me/393487521984?text=" + encodeURIComponent("Ciao Gaetano! Purtroppo non riuscirò a partecipare al vostro matrimonio, ma vi auguro tantissima felicità! ❤️");
+      document.getElementById('rifiutoRogena').href = "https://wa.me/393349494887?text=" + encodeURIComponent("Ciao Rogena! Purtroppo non riuscirò a partecipare al vostro matrimonio, ma vi auguro tantissima felicità! ❤️");
+      modalDecline.classList.add('active');
+    });
+
+    // Cliccando su un link di assenza si chiude semplicemente la modale
+    document.querySelectorAll('#modalDecline .sub-channel-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(() => { modalDecline.classList.remove('active'); }, 400);
+      });
+    });
+
+    document.getElementById('closeDeclineBtn').addEventListener('click', () => modalDecline.classList.remove('active'));
+    modalDecline.addEventListener('click', (e) => { if (e.target === modalDecline) modalDecline.classList.remove('active'); });
+  </script>
+</body>
+
+</html>
