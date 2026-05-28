@@ -25,34 +25,45 @@
       --creamdk: #ede4dc;
       --text: #3a2a1a;
       --textlt: #7a6050;
-      --orange: #a04010; /* Arancione Terracotta Profondo */
+      --orange: #a04010;
     }
 
+    /* BLOCCA IL BROWSER NATURALE: Impedisce alla barra HTTP di muoversi o sparire */
     html, body {
       height: 100%;
       width: 100%;
+      overflow: hidden;
+      position: relative;
     }
 
     body {
       font-family: 'Cormorant SC', serif;
       background: var(--cream);
+    }
+
+    /* CONTENITORE DELLO SCROLL INTERNO: Sostituisce lo scroll del browser */
+    .scroll-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden; /* Bloccato inizialmente per la busta */
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      overflow-x: hidden;
-      overflow-y: hidden; /* Blocca lo scroll inizialmente sulla busta */
-      position: relative;
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
     }
 
-    /* Stato attivato dopo l'apertura per lo scroll della seconda pagina */
-    body.scroll-allowed {
+    /* Attivato via JS all'apertura della busta */
+    .scroll-wrapper.scroll-allowed {
       overflow-y: auto;
-      align-items: flex-start; /* Permette alla card di scorrere dall'alto verso il basso */
+      align-items: flex-start; /* Permette il corretto posizionamento dall'alto */
     }
 
-    /* Sfondo sfocato fisso - Immune al ridimensionamento della barra indirizzi mobile */
+    /* Sfondi fissi assoluti rispetto allo schermo */
     body::before {
       content: '';
       position: fixed;
@@ -66,10 +77,8 @@
       background-size: cover;
       filter: blur(18px) brightness(1.1);
       z-index: -2;
-      transform: translate3d(0,0,0); /* Ottimizzazione hardware mobile */
     }
 
-    /* Sfondo nitido sopra fisso - Immune al ridimensionamento della barra indirizzi mobile */
     body::after {
       content: '';
       position: fixed;
@@ -84,7 +93,6 @@
       background-position: center top;
       background-size: auto 100%;
       z-index: -1;
-      transform: translate3d(0,0,0);
     }
 
     @media(max-width: 768px) {
@@ -113,7 +121,6 @@
       z-index: 1100; 
     }
 
-    /* ── SCRITTA SAVE THE DATE sopra la busta ── */
     .ribbon-envelope {
       padding: 14px 0 6px;
       font-size: 11px;
@@ -147,7 +154,7 @@
       box-shadow: 0 30px 80px rgba(100, 50, 20, .12);
       overflow: hidden;
       margin-top: 20px;
-      margin-bottom: 40px; /* Spazio sul fondo per respirare a fine scroll */
+      margin-bottom: 40px; 
     }
 
     @keyframes cardIn {
@@ -322,9 +329,6 @@
       50% { transform: scale(1.05); filter: drop-shadow(0 8px 22px rgba(140,40,10,.6)); }
     }
 
-    .seal-btn:hover { animation: none; transform: scale(1.08) }
-    .seal-btn:active { animation: none; transform: scale(.95) }
-
     .envelope.opening .env-flap { transform: rotateX(-180deg) }
     .envelope.opening .env-seal { opacity: 0; transform: translateX(-50%) scale(.65) }
 
@@ -381,12 +385,7 @@
       font-size: 12px
     }
 
-    .lp-lines {
-      display: flex;
-      flex-direction: column;
-      gap: 4px
-    }
-
+    .lp-lines { display: flex; flex-direction: column; gap: 4px }
     .lp-line { height: 3px; border-radius: 2px; background: #ecddd4 }
     .lp-line.d { background: #ddd0c8 }
     .lp-line.f { width: 100% }
@@ -420,9 +419,7 @@
     }
 
     /* ── CONTENUTO INVITO ── */
-    .content-inner {
-      padding: 32px 32px 48px
-    }
+    .content-inner { padding: 32px 32px 48px }
 
     .script-title {
       font-family: 'Cormorant Garamond', serif;
@@ -459,7 +456,6 @@
       font-style: italic;
       font-weight: 300;
       font-family: 'Cormorant Garamond', serif;
-      letter-spacing: .05em
     }
 
     .divider {
@@ -476,10 +472,7 @@
       background: linear-gradient(to right, transparent, var(--orange), transparent)
     }
 
-    .divider-ornament {
-      color: var(--orange);
-      font-size: 14px
-    }
+    .divider-ornament { color: var(--orange); font-size: 14px }
 
     .info-line {
       font-size: .74rem;
@@ -536,14 +529,6 @@
       border: none
     }
 
-    @media (hover: hover) {
-      .aBtn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(160, 60, 10, .32)
-      }
-      .aBtn.outline:hover { background: rgba(160, 64, 16, .08) }
-    }
-
     .aBtn.outline {
       background: transparent;
       border: 1px solid var(--orange);
@@ -551,11 +536,7 @@
       box-shadow: none
     }
 
-    .aBtn.grey {
-      background: linear-gradient(135deg, #c0b8b4, #a09090);
-      box-shadow: none
-    }
-
+    .aBtn.grey { background: linear-gradient(135deg, #c0b8b4, #a09090); box-shadow: none }
     .aBtn.green {
       background: linear-gradient(135deg, var(--sage), #5a7a5a);
       box-shadow: 0 4px 16px rgba(90, 130, 80, .22)
@@ -577,10 +558,7 @@
       padding: 20px;
     }
 
-    .overlay-modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .overlay-modal.active { opacity: 1; pointer-events: auto; }
 
     .modal-box {
       background: #fffcf8;
@@ -596,10 +574,7 @@
       transition: transform 0.4s cubic-bezier(.22, 1, .36, 1);
     }
 
-    .overlay-modal.active .modal-box {
-      transform: scale(1) translateY(0);
-    }
-
+    .overlay-modal.active .modal-box { transform: scale(1) translateY(0); }
     .modal-close {
       position: absolute;
       top: 12px;
@@ -609,10 +584,7 @@
       font-size: 22px;
       color: var(--textlt);
       cursor: pointer;
-      line-height: 1;
-      transition: color 0.2s;
     }
-    .modal-close:hover { color: var(--orange); }
 
     .modal-title {
       font-family: 'Cormorant SC', serif;
@@ -620,7 +592,6 @@
       color: var(--orange);
       margin-bottom: 8px;
       font-weight: 600;
-      letter-spacing: 0.05em;
     }
 
     .modal-desc {
@@ -631,11 +602,7 @@
       margin-bottom: 24px;
     }
 
-    .modal-channels {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .modal-channels { display: flex; flex-direction: column; gap: 12px; }
 
     .sub-channel-btn {
       display: block;
@@ -647,28 +614,9 @@
       font-weight: 600;
       text-transform: uppercase;
       text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
-      text-align: center;
+      color: var(--orange);
       border: 1px solid var(--orange);
       background-color: #fffcf8;
-      color: var(--orange);
-      box-shadow: 0 2px 8px rgba(160, 60, 10, 0.04);
-    }
-
-    @media (hover: hover) {
-      .sub-channel-btn:hover {
-        background-color: var(--orange) !important;
-        color: #fff !important;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(160, 60, 10, 0.15);
-      }
-    }
-
-    .sub-channel-btn:active {
-      background-color: var(--orange) !important;
-      color: #fff !important;
-      transform: scale(0.98);
     }
 
     .contacts {
@@ -695,19 +643,8 @@
       .contacts { flex-direction: column; gap: 8px; align-items: center; text-align: center }
     }
 
-    .sigillo-img {
-      width: 75px;
-      height: auto;
-      display: block;
-    }
-
-    .env-seal {
-      width: 100px;
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .sigillo-img { width: 75px; height: auto; display: block; }
+    .env-seal { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
   </style>
 </head>
 
@@ -739,119 +676,126 @@
     </div>
   </div>
 
-  <main class="card" id="card">
+  <!-- NUOVO WRAPPER DI SCROLL: Isola il movimento impedendo al browser di nascondere la barra HTTP -->
+  <div class="scroll-wrapper" id="scrollWrapper">
+    <main class="card" id="card">
 
-    <div class="ribbon-envelope">✦ Save the Date ✦</div>
+      <div class="ribbon-envelope">✦ Save the Date ✦</div>
 
-    <section class="intro-screen" style="padding:0 24px 32px">
-      <div class="envelope-scene">
-        <div class="envelope" id="envelope">
-          <div class="env-body"></div>
-          <div class="env-tri-left"></div>
-          <div class="env-tri-right"></div>
-          <div class="env-bottom"></div>
-          <div class="env-flap"></div>
-          <div class="letter-pop">
-            <div class="lp-header">
-              <div class="lp-from">Cara amica,<br>sei invitata…</div>
-              <div class="lp-stamp">💌</div>
+      <!-- SCHERMATA BUSTA -->
+      <section class="intro-screen" style="padding:0 24px 32px">
+        <div class="envelope-scene">
+          <div class="envelope" id="envelope">
+            <div class="env-body"></div>
+            <div class="env-tri-left"></div>
+            <div class="env-tri-right"></div>
+            <div class="env-bottom"></div>
+            <div class="env-flap"></div>
+            <div class="letter-pop">
+              <div class="lp-header">
+                <div class="lp-from">Cara amica,<br>sei invitata…</div>
+                <div class="lp-stamp">💌</div>
+              </div>
+              <div class="lp-lines">
+                <div class="lp-line d f"></div>
+                <div class="lp-line m"></div>
+                <div class="lp-line f"></div>
+                <div class="lp-line s"></div>
+                <div class="lp-line f"></div>
+                <div class="lp-line xs"></div>
+              </div>
+              <div class="lp-footer">
+                <div class="lp-sign">Con amore,<br><strong>Gaetano & Rogena</strong></div>
+                <div style="font-size:13px;opacity:.6;padding-bottom:2px">🤍</div>
+              </div>
             </div>
-            <div class="lp-lines">
-              <div class="lp-line d f"></div>
-              <div class="lp-line m"></div>
-              <div class="lp-line f"></div>
-              <div class="lp-line s"></div>
-              <div class="lp-line f"></div>
-              <div class="lp-line xs"></div>
-            </div>
-            <div class="lp-footer">
-              <div class="lp-sign">Con amore,<br><strong>Gaetano & Rogena</strong></div>
-              <div style="font-size:13px;opacity:.6;padding-bottom:2px">🤍</div>
+            <div class="env-seal">
+              <button class="seal-btn" id="openBtn">
+                <img src="sigillo.png" alt="Sigillo" class="sigillo-img">
+              </button>
             </div>
           </div>
-          <div class="env-seal">
-            <button class="seal-btn" id="openBtn">
-              <img src="sigillo.png" alt="Sigillo" class="sigillo-img">
-            </button>
+        </div>
+        <p class="env-caption">Hai ricevuto un invito speciale</p>
+      </section>
+
+      <!-- INVITO -->
+      <section class="content-screen" id="contentScreen">
+        <div class="content-inner">
+
+          <div class="script-title">save the date</div>
+          <div class="announce">annunciano il loro matrimonio</div>
+          <div class="names">Gaetano <span class="amp">&</span> Rogena</div>
+
+          <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-ornament">✦</div>
+            <div class="divider-line"></div>
           </div>
-        </div>
-      </div>
-      <p class="env-caption">Hai ricevuto un invito speciale</p>
-    </section>
 
-    <section class="content-screen" id="contentScreen">
-      <div class="content-inner">
-
-        <div class="script-title">save the date</div>
-        <div class="announce">annunciano il loro matrimonio</div>
-        <div class="names">Gaetano <span class="amp">&</span> Rogena</div>
-
-        <div class="divider">
-          <div class="divider-line"></div>
-          <div class="divider-ornament">✦</div>
-          <div class="divider-line"></div>
-        </div>
-
-        <div>
-          <div class="info-line">Domenica 31 Maggio 2026</div>
-          <div class="info-line">Alle ore 11.30</div>
-          <br>
-          <div class="info-line small">Presso la Sala Ricevimenti</div>
-          <div class="info-line">Reggia dei Tessali</div>
-          <div class="info-line small">( S.da Statale 106 Jonica, 74013 Ginosa - TA )</div>
-          <br>
-          <div class="info-line small">Dove al termine del rito celebrativo</div>
-          <div class="info-line small">proseguiranno i festeggiamenti</div>
-          <div class="info-line note">
-            È gradita gentile conferma entro il 30 aprile<br>
-            Specificare eventuali intolleranze o allergie
+          <!-- INFO -->
+          <div>
+            <div class="info-line">Domenica 31 Maggio 2026</div>
+            <div class="info-line">Alle ore 11.30</div>
+            <br>
+            <div class="info-line small">Presso la Sala Ricevimenti</div>
+            <div class="info-line">Reggia dei Tessali</div>
+            <div class="info-line small">( S.da Statale 106 Jonica, 74013 Ginosa - TA )</div>
+            <br>
+            <div class="info-line small">Dove al termine del rito celebrativo</div>
+            <div class="info-line small">proseguiranno i festeggiamenti</div>
+            <div class="info-line note">
+              È gradita gentile conferma entro il 30 aprile<br>
+              Specificare eventuali intolleranze o allergie
+            </div>
           </div>
+
+          <div class="divider" style="margin-top:24px">
+            <div class="divider-line"></div>
+            <div class="divider-ornament">✦</div>
+            <div class="divider-line"></div>
+          </div>
+
+          <!-- BOTTONI -->
+          <div class="btns">
+            <a class="aBtn outline" href="https://maps.google.com/maps?q=Reggia+dei+Tessali+Ginosa+Taranto"
+              target="_blank">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                style="display:inline;vertical-align:middle;margin-right:5px">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
+                  fill="var(--orange)" />
+              </svg>
+              Mappa
+            </a>
+            
+            <button class="aBtn" id="btnPartecipo">Partecipo 🥂</button>
+            <button class="aBtn grey" id="btnNonPartecipo">Non partecipo</button>
+            
+            <a class="aBtn green" id="btnRegalo"
+              href="https://wa.me/393487521984?text=Ciao%20Gaetano!%20Vorrei%20contribuire%20al%20vostro%20viaggio%20dei%20sogni%20%F0%9F%8E%81"
+              target="_blank">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                style="display:inline;vertical-align:middle;margin-right:5px">
+                <rect x="2" y="9" width="20" height="13" rx="2" stroke="#fff" stroke-width="1.8" fill="none"/>
+                <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M12 13v4M10 15h4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M2 13h20" stroke="#fff" stroke-width="1.5"/>
+              </svg>
+              Regalo
+            </a>
+          </div>
+
         </div>
 
-        <div class="divider" style="margin-top:24px">
-          <div class="divider-line"></div>
-          <div class="divider-ornament">✦</div>
-          <div class="divider-line"></div>
+        <div class="contacts">
+          <span>Gaetano  348 7521984</span>
+          <span>Rogena  334 9494887</span>
         </div>
+      </section>
 
-        <div class="btns">
-          <a class="aBtn outline" href="https://maps.google.com/maps?q=Reggia+dei+Tessali+Ginosa+Taranto"
-            target="_blank">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
-              style="display:inline;vertical-align:middle;margin-right:5px">
-              <path
-                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"
-                fill="var(--orange)" />
-            </svg>
-            Mappa
-          </a>
-          
-          <button class="aBtn" id="btnPartecipo">Partecipo 🥂</button>
-          <button class="aBtn grey" id="btnNonPartecipo">Non partecipo</button>
-          
-          <a class="aBtn green" id="btnRegalo"
-            href="https://wa.me/393487521984?text=Ciao%20Gaetano!%20Vorrei%20contribuire%20al%20vostro%20viaggio%20dei%20sogni%20%F0%9F%8E%81"
-            target="_blank">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-              style="display:inline;vertical-align:middle;margin-right:5px">
-              <rect x="2" y="9" width="20" height="13" rx="2" stroke="#fff" stroke-width="1.8" fill="none"/>
-              <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M12 13v4M10 15h4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M2 13h20" stroke="#fff" stroke-width="1.5"/>
-            </svg>
-            Regalo
-          </a>
-        </div>
-
-      </div>
-
-      <div class="contacts">
-        <span>Gaetano  348 7521984</span>
-        <span>Rogena  334 9494887</span>
-      </div>
-    </section>
-
-  </main>
+    </main>
+  </div>
 
   <script>
     // ── SFONDO ACQUERELLO ──
@@ -904,7 +848,7 @@
       if (confettis.length > 0) requestAnimationFrame(animateC);
     }
 
-    // ── FRUSCIO ──
+    // ── AUDIO FRUSCIO ──
     function playRustle() {
       try {
         const ac = new (window.AudioContext || window.webkitAudioContext)(); const dur = 1.4, buf = ac.createBuffer(1, ac.sampleRate * dur, ac.sampleRate);
@@ -922,43 +866,35 @@
       
       setTimeout(() => { 
         document.getElementById('card').classList.add('opened'); 
-        document.body.classList.add('scroll-allowed'); // Abilita lo scroll verticale nativo dell'invito
+        document.getElementById('scrollWrapper').classList.add('scroll-allowed'); // Lo scroll avviene dentro il wrapper isolato, preservando la barra HTTP
       }, 900);
     });
 
-    // ── GESTIONE MODALE 1: PARTECIPO ──
+    // Modali Partecipo / Non Partecipo restano invariati
     const modalConfirm = document.getElementById('modalConfirm');
     document.getElementById('btnPartecipo').addEventListener('click', () => {
       document.getElementById('confermaGaetano').href = "https://wa.me/393487521984?text=" + encodeURIComponent("Ciao Gaetano! Ti confermo con grandissimo piacere la mia partecipazione al vostro matrimonio! 🥂✨");
       document.getElementById('confermaRogena').href = "https://wa.me/393349494887?text=" + encodeURIComponent("Ciao Rogena! Ti confermo con grandissimo piacere la mia partecipazione al vostro matrimonio! 🥂✨");
       modalConfirm.classList.add('active');
     });
-
     document.querySelectorAll('.confirm-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         shootConfetti(window.innerWidth / 2, window.innerHeight / 2);
         setTimeout(() => { modalConfirm.classList.remove('active'); }, 400);
       });
     });
-
     document.getElementById('closeConfirmBtn').addEventListener('click', () => modalConfirm.classList.remove('active'));
     modalConfirm.addEventListener('click', (e) => { if (e.target === modalConfirm) modalConfirm.classList.remove('active'); });
 
-
-    // ── GESTIONE MODALE 2: NON PARTECIPO ──
     const modalDecline = document.getElementById('modalDecline');
     document.getElementById('btnNonPartecipo').addEventListener('click', () => {
       document.getElementById('rifiutoGaetano').href = "https://wa.me/393487521984?text=" + encodeURIComponent("Ciao Gaetano! Purtroppo non riuscirò a partecipare al vostro matrimonio, ma vi auguro tantissima felicità! ❤️");
       document.getElementById('rifiutoRogena').href = "https://wa.me/393349494887?text=" + encodeURIComponent("Ciao Rogena! Purtroppo non riuscirò a partecipare al vostro matrimonio, ma vi auguro tantissima felicità! ❤️");
       modalDecline.classList.add('active');
     });
-
     document.querySelectorAll('#modalDecline .sub-channel-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(() => { modalDecline.classList.remove('active'); }, 400);
-      });
+      btn.addEventListener('click', () => { setTimeout(() => { modalDecline.classList.remove('active'); }, 400); });
     });
-
     document.getElementById('closeDeclineBtn').addEventListener('click', () => modalDecline.classList.remove('active'));
     modalDecline.addEventListener('click', (e) => { if (e.target === modalDecline) modalDecline.classList.remove('active'); });
   </script>
