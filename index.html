@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Save the Date – Gaetano & Rogena</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght=300;400;500;600;700&family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght=300;400;500;600&display=swap"
@@ -28,8 +28,12 @@
       --orange: #a04010; /* Arancione Terracotta Profondo */
     }
 
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
     body {
-      min-height: 100vh;
       font-family: 'Cormorant SC', serif;
       background: var(--cream);
       display: flex;
@@ -37,42 +41,50 @@
       justify-content: center;
       padding: 24px;
       overflow-x: hidden;
-      overflow-y: hidden; /* Blocca lo scroll inizialmente quando c'è la busta */
+      overflow-y: hidden; /* Blocca lo scroll inizialmente sulla busta */
       position: relative;
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* Stato attivato da JavaScript dopo l'apertura della busta per ripristinare lo scroll */
+    /* Stato attivato dopo l'apertura per lo scroll della seconda pagina */
     body.scroll-allowed {
       overflow-y: auto;
+      align-items: flex-start; /* Permette alla card di scorrere dall'alto verso il basso */
     }
 
-    /* Lo sfondo sfocato sotto rimane totalmente fisso */
+    /* Sfondo sfocato fisso - Immune al ridimensionamento della barra indirizzi mobile */
     body::before {
       content: '';
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background-image: url('sfondo.jpeg');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      background-attachment: fixed; /* Blocca l'immagine durante lo scroll */
       filter: blur(18px) brightness(1.1);
       z-index: -2;
+      transform: translate3d(0,0,0); /* Ottimizzazione hardware mobile */
     }
 
-    /* Lo sfondo principale nitido sopra rimane totalmente fisso */
+    /* Sfondo nitido sopra fisso - Immune al ridimensionamento della barra indirizzi mobile */
     body::after {
       content: '';
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background-image:
         linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.08)),
         url('sfondo.jpeg');
       background-repeat: no-repeat;
       background-position: center top;
       background-size: auto 100%;
-      background-attachment: fixed; /* Blocca l'immagine durante lo scroll */
       z-index: -1;
+      transform: translate3d(0,0,0);
     }
 
     @media(max-width: 768px) {
@@ -80,11 +92,9 @@
         background-size: contain; 
         background-position: center center;
         background-color: var(--cream); 
-        background-attachment: fixed;
       }
       body::before {
         filter: blur(8px) brightness(1.1); 
-        background-attachment: fixed;
       }
     }
 
@@ -137,7 +147,7 @@
       box-shadow: 0 30px 80px rgba(100, 50, 20, .12);
       overflow: hidden;
       margin-top: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 40px; /* Spazio sul fondo per respirare a fine scroll */
     }
 
     @keyframes cardIn {
@@ -912,7 +922,7 @@
       
       setTimeout(() => { 
         document.getElementById('card').classList.add('opened'); 
-        document.body.classList.add('scroll-allowed'); // Consente lo scroll verticale SOLO ora che la busta si è aperta
+        document.body.classList.add('scroll-allowed'); // Abilita lo scroll verticale nativo dell'invito
       }, 900);
     });
 
