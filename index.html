@@ -68,11 +68,12 @@
 
     @media(max-width: 768px) {
       body::after {
-        background-size: cover;
-        background-position: top center;
+        background-size: contain; /* Riduce l'immagine per farla entrare interamente nei lati */
+        background-position: center center;
+        background-color: var(--cream); /* Riempie eventuali vuoti sopra/sotto in modo armonioso */
       }
       body::before {
-        filter: blur(12px) brightness(1.1);
+        filter: blur(8px) brightness(1.1); /* Ottimizza la sfocatura di fondo su mobile */
       }
     }
 
@@ -818,7 +819,7 @@
           <!-- Non partecipo (apre modale assenza) -->
           <button class="aBtn grey" id="btnNonPartecipo">Non partecipo</button>
           
-          <!-- Regalo (Link diretto WhatsApp con nuovo numero di Gaetano) -->
+          <!-- Regalo (Link directo WhatsApp) -->
           <a class="aBtn green" id="btnRegalo"
             href="https://wa.me/393487521984?text=Ciao%20Gaetano!%20Vorrei%20contribuire%20al%20vostro%20viaggio%20dei%20sogni%20%F0%9F%8E%81"
             target="_blank">
@@ -920,7 +921,6 @@
       modalConfirm.classList.add('active');
     });
 
-    // Quando cliccano sulla scelta del partner per festeggiare, partono i coriandoli
     document.querySelectorAll('.confirm-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         shootConfetti(window.innerWidth / 2, window.innerHeight / 2);
@@ -940,7 +940,6 @@
       modalDecline.classList.add('active');
     });
 
-    // Cliccando su un link di assenza si chiude semplicemente la modale
     document.querySelectorAll('#modalDecline .sub-channel-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         setTimeout(() => { modalDecline.classList.remove('active'); }, 400);
