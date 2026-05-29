@@ -28,7 +28,7 @@
       --orange: #a04010;
     }
 
-    /* BLOCCA IL BROWSER NATURALE: Impedisce alla barra HTTP di muoversi o sparire */
+    /* BLOCCA IL BROWSER NATURALE */
     html, body {
       height: 100%;
       width: 100%;
@@ -41,7 +41,7 @@
       background: var(--cream);
     }
 
-    /* CONTENITORE DELLO SCROLL INTERNO: Sostituisce lo scroll del browser */
+    /* CONTENITORE DELLO SCROLL INTERNO */
     .scroll-wrapper {
       position: absolute;
       top: 0;
@@ -49,21 +49,20 @@
       width: 100%;
       height: 100%;
       overflow-x: hidden;
-      overflow-y: hidden; /* Bloccato inizialmente per la busta */
+      overflow-y: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
-      -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
+      -webkit-overflow-scrolling: touch;
     }
 
-    /* Attivato via JS all'apertura della busta */
     .scroll-wrapper.scroll-allowed {
       overflow-y: auto;
-      align-items: flex-start; /* Permette il corretto posizionamento dall'alto */
+      align-items: flex-start;
     }
 
-    /* Sfondi fissi assoluti rispetto allo schermo */
+    /* Sfondi fissi assoluti */
     body::before {
       content: '';
       position: fixed;
@@ -75,7 +74,7 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      filter: blur(30px) brightness(0.95); /* MODIFICATO: Aumentato sfocatura per maggiore dissolvenza */
+      filter: blur(30px) brightness(0.95);
       z-index: -2;
     }
 
@@ -87,7 +86,7 @@
       width: 100vw;
       height: 100vh;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.50)), /* MODIFICATO: Aumentata l'opacità bianca (da 0.15/0.18) per sbiadire lo sfondo */
+        linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.50)),
         url('sfondo.png');
       background-repeat: no-repeat;
       background-position: center top;
@@ -102,7 +101,7 @@
         background-color: var(--cream); 
       }
       body::before {
-        filter: blur(18px) brightness(0.95); /* MODIFICATO: Uniformato anche per mobile */
+        filter: blur(18px) brightness(0.95);
       }
     }
 
@@ -111,7 +110,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.10; /* MODIFICATO: Ridotta l'opacità dei cerchi in movimento (da 0.20) per distrarre meno */
+      opacity: 0.10;
     }
 
     canvas#confetti-canvas {
@@ -318,7 +317,7 @@
     }
 
     .seal-btn img {
-      mix-blend-mode: multiply;
+      mix-blend-mode: screen;
       filter: contrast(1.15) saturate(1.1);
       border-radius: 50%;
       object-fit: cover;
@@ -327,15 +326,14 @@
       background: transparent;
     }
 
-    /* Stile per il link Clicca Qui sotto il timbro */
     .seal-click-here {
       background: none;
       border: none;
       font-family: 'Cormorant SC', serif;
-      font-size: 0.65rem; /* MODIFICATO: Più piccolo (da 0.72rem) */
+      font-size: 0.65rem;
       color: var(--orange);
       text-decoration: underline;
-      letter-spacing: 0.05em; /* MODIFICATO: Lettere molto più vicine (da 0.15em) */
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       margin-top: 10px;
       cursor: pointer;
@@ -415,7 +413,6 @@
     .lp-line.f { width: 100% }
     .lp-line.m { width: 80% }
     .lp-line.s { width: 56% }
-    .lp-line.f { width: 100% }
     .lp-line.xs { width: 38% }
 
     .lp-footer {
@@ -644,6 +641,168 @@
       background-color: #fffcf8;
     }
 
+    /* ── MODALE REGALO — STILE BIGLIETTINO VERDE SALVIA ── */
+    #modalGift .modal-box {
+      background: linear-gradient(225deg, #f2f8f0 0%, #dbefd4 18%, #c2e0ba 40%, #a8ceA0 65%, #8faa87 85%, #7a9a72 100%);
+      border: none;
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+      max-width: 420px;
+      width: 92%;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+      min-height: 560px;
+    }
+
+    #modalGift .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      z-index: 20;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.75);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    #modalGift .modal-close:hover {
+      color: #fff;
+    }
+
+    .gift-flower-wrap {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 340px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .gift-flower-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      mix-blend-mode: screen;
+      opacity: 1;
+    }
+
+    .gift-card-body {
+      position: relative;
+      z-index: 5;
+      padding: 48px 36px 0 36px;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .gift-top-text {
+      margin-top: 110px;
+    }
+
+    .gift-headline {
+      font-family: 'Cormorant SC', serif;
+      font-size: clamp(1.05rem, 4vw, 1.3rem);
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    }
+
+    .gift-sub-text {
+      font-family: 'Cormorant SC', serif;
+      font-size: clamp(0.88rem, 3vw, 1.05rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.65;
+      margin-bottom: 32px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    .gift-iban-block {
+      margin: 0 0 12px 0;
+    }
+
+    .gift-iban-label {
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.78);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .gift-iban-value {
+      font-family: 'Cormorant SC', serif;
+      font-size: clamp(0.82rem, 3.2vw, 1rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.05em;
+      word-break: break-all;
+      line-height: 1.5;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .gift-intestatario {
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.92);
+      text-transform: uppercase;
+      margin: 10px 0 24px;
+    }
+
+    .gift-copy-btn {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.45);
+      color: #fff;
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .gift-copy-btn:hover {
+      background: rgba(255,255,255,0.28);
+    }
+
+    .gift-copy-btn.copied {
+      background: rgba(255,255,255,0.35);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    .gift-grazie {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.88);
+      text-align: right;
+      padding: 0 8px 28px 0;
+      line-height: 1;
+    }
+
     .contacts {
       display: flex;
       justify-content: space-between;
@@ -701,12 +860,46 @@
     </div>
   </div>
 
+  <div class="overlay-modal" id="modalGift">
+    <div class="modal-box">
+      <button class="modal-close" id="closeGiftBtn">×</button>
+
+      <!-- Bouquet SVG in alto a destra -->
+      <div class="gift-flower-wrap">
+        <img src="fiori.png" alt="Fiori" />
+      </div>
+
+      <div class="gift-card-body">
+        <div class="gift-top-text">
+          <div class="gift-headline">Il regalo più bello<br>sarà avervi con noi</div>
+          <div class="gift-sub-text">Per chi volesse aiutarci<br>a realizzare il viaggio dei<br>nostri sogni…</div>
+        </div>
+
+        <div>
+          <div class="gift-iban-block">
+            <div class="gift-iban-label">Iban</div>
+            <div class="gift-iban-value" id="ibanText">IT45H0306941725100000015052</div>
+          </div>
+          <div class="gift-intestatario">Intestatario: Rogena Bulku</div>
+
+          <button class="gift-copy-btn" id="copyIbanBtn" aria-label="Copia IBAN">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+            <span id="copyIbanBtnLabel">Copia IBAN</span>
+          </button>
+        </div>
+
+        <div class="gift-grazie">grazie</div>
+      </div>
+    </div>
+  </div>
+
   <div class="scroll-wrapper" id="scrollWrapper">
     <main class="card" id="card">
 
       <div class="ribbon-envelope">✦ Save the Date ✦</div>
 
-      <!-- SCHERMATA BUSTA -->
       <section class="intro-screen" style="padding:0 24px 32px">
         <div class="envelope-scene">
           <div class="envelope" id="envelope">
@@ -744,7 +937,6 @@
         <p class="env-caption">Hai ricevuto un invito speciale</p>
       </section>
 
-      <!-- INVITO -->
       <section class="content-screen" id="contentScreen">
         <div class="content-inner">
 
@@ -758,7 +950,6 @@
             <div class="divider-line"></div>
           </div>
 
-          <!-- INFO -->
           <div>
             <div class="info-line">Domenica 31 Maggio 2026</div>
             <div class="info-line">Alle ore 11.30</div>
@@ -781,7 +972,6 @@
             <div class="divider-line"></div>
           </div>
 
-          <!-- BOTTONI -->
           <div class="btns">
             <a class="aBtn outline" href="https://maps.google.com/maps?q=Reggia+dei+Tessali+Ginosa+Taranto"
               target="_blank">
@@ -797,9 +987,7 @@
             <button class="aBtn" id="btnPartecipo">Partecipo 🥂</button>
             <button class="aBtn grey" id="btnNonPartecipo">Non partecipo</button>
             
-            <a class="aBtn green" id="btnRegalo"
-              href="https://wa.me/393487521984?text=Ciao%20Gaetano!%20Vorrei%20contribuire%20al%20vostro%20viaggio%20dei%20sogni%20%F0%9F%8E%81"
-              target="_blank">
+            <button class="aBtn green" id="btnRegalo">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                 style="display:inline;vertical-align:middle;margin-right:5px">
                 <rect x="2" y="9" width="20" height="13" rx="2" stroke="#fff" stroke-width="1.8" fill="none"/>
@@ -808,7 +996,7 @@
                 <path d="M2 13h20" stroke="#fff" stroke-width="1.5"/>
               </svg>
               Regalo
-            </a>
+            </button>
           </div>
 
         </div>
@@ -895,11 +1083,10 @@
       }, 900);
     }
 
-    // Collegamento dell'azione sia al sigillo che al link sottolineato
     document.getElementById('openBtn').addEventListener('click', openEnvelope);
     document.getElementById('openBtnLink').addEventListener('click', openEnvelope);
 
-    // Modali Partecipo / Non Partecipo restano invariati
+    // Gestione Modale Partecipo
     const modalConfirm = document.getElementById('modalConfirm');
     document.getElementById('btnPartecipo').addEventListener('click', () => {
       document.getElementById('confermaGaetano').href = "https://wa.me/393487521984?text=" + encodeURIComponent("Ciao Gaetano! Ti confermo con grandissimo piacere la mia partecipazione al vostro matrimonio! 🥂✨");
@@ -915,6 +1102,7 @@
     document.getElementById('closeConfirmBtn').addEventListener('click', () => modalConfirm.classList.remove('active'));
     modalConfirm.addEventListener('click', (e) => { if (e.target === modalConfirm) modalConfirm.classList.remove('active'); });
 
+    // Gestione Modale Non Partecipo
     const modalDecline = document.getElementById('modalDecline');
     document.getElementById('btnNonPartecipo').addEventListener('click', () => {
       document.getElementById('rifiutoGaetano').href = "https://wa.me/393487521984?text=" + encodeURIComponent("Ciao Gaetano! Purtroppo non riuscirò a partecipare al vostro matrimonio, ma vi auguro tantissima felicità! ❤️");
@@ -926,6 +1114,29 @@
     });
     document.getElementById('closeDeclineBtn').addEventListener('click', () => modalDecline.classList.remove('active'));
     modalDecline.addEventListener('click', (e) => { if (e.target === modalDecline) modalDecline.classList.remove('active'); });
+
+    // ── GESTIONE MODALE REGALO & COPIA IBAN ──
+    const modalGift = document.getElementById('modalGift');
+    const btnRegalo = document.getElementById('btnRegalo');
+    const closeGiftBtn = document.getElementById('closeGiftBtn');
+    const copyIbanBtn = document.getElementById('copyIbanBtn');
+    const copyIbanBtnLabel = document.getElementById('copyIbanBtnLabel');
+    const ibanText = document.getElementById('ibanText').innerText;
+
+    btnRegalo.addEventListener('click', () => { modalGift.classList.add('active'); });
+    closeGiftBtn.addEventListener('click', () => modalGift.classList.remove('active'));
+    modalGift.addEventListener('click', (e) => { if (e.target === modalGift) modalGift.classList.remove('active'); });
+
+    copyIbanBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(ibanText).then(() => {
+        copyIbanBtnLabel.innerText = "Copiato! ✓";
+        copyIbanBtn.classList.add('copied');
+        setTimeout(() => {
+          copyIbanBtnLabel.innerText = "Copia IBAN";
+          copyIbanBtn.classList.remove('copied');
+        }, 2500);
+      }).catch(err => console.error('Errore copia IBAN:', err));
+    });
   </script>
 </body>
 
