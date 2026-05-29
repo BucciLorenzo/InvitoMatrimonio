@@ -75,7 +75,7 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      filter: blur(18px) brightness(1.1);
+      filter: blur(22px) brightness(1.12); /* Aumentata la sfocatura e luminosità per più dissolvenza */
       z-index: -2;
     }
 
@@ -87,7 +87,7 @@
       width: 100vw;
       height: 100vh;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.08)),
+        linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.18)), /* Incrementata la dissolvenza bianca sullo sfondo */
         url('sfondo.png');
       background-repeat: no-repeat;
       background-position: center top;
@@ -102,7 +102,7 @@
         background-color: var(--cream); 
       }
       body::before {
-        filter: blur(8px) brightness(1.1); 
+        filter: blur(12px) brightness(1.12); 
       }
     }
 
@@ -111,7 +111,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.35;
+      opacity: 0.20; /* Ridotta l'opacità per una dissolvenza maggiore ma controllata */
     }
 
     canvas#confetti-canvas {
@@ -292,7 +292,10 @@
       bottom: 14%;
       transform: translateX(-50%);
       z-index: 6;
-      transition: opacity .3s, transform .3s
+      transition: opacity .3s, transform .3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .seal-btn {
@@ -322,6 +325,27 @@
       border: none;
       box-shadow: none;
       background: transparent;
+    }
+
+    /* Stile per il link Clicca Qui sotto il timbro */
+    .seal-click-here {
+      background: none;
+      border: none;
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.72rem;
+      color: var(--orange);
+      text-decoration: underline;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      outline: none;
+      transition: color 0.2s;
+    }
+    
+    .seal-click-here:hover {
+      color: var(--terradark);
     }
 
     @keyframes sealPulse {
@@ -644,7 +668,7 @@
     }
 
     .sigillo-img { width: 75px; height: auto; display: block; }
-    .env-seal { width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
+    .env-seal { width: 120px; height: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; }
   </style>
 </head>
 
@@ -710,9 +734,10 @@
               </div>
             </div>
             <div class="env-seal">
-              <button class="seal-btn" id="openBtn">
+              <button class="seal-btn" id="openBtn" aria-label="Apri l'invito">
                 <img src="sigillo.png" alt="Sigillo" class="sigillo-img">
               </button>
+              <button class="seal-click-here" id="openBtnLink">Clicca qui</button>
             </div>
           </div>
         </div>
@@ -859,16 +884,20 @@
       } catch (e) { }
     }
 
-    // ── APERTURA BUSTA ──
-    document.getElementById('openBtn').addEventListener('click', () => {
+    // ── FUNZIONE APERTURA UNIFICATA ──
+    function openEnvelope() {
       playRustle(); 
       document.getElementById('envelope').classList.add('opening');
       
       setTimeout(() => { 
         document.getElementById('card').classList.add('opened'); 
-        document.getElementById('scrollWrapper').classList.add('scroll-allowed'); // Lo scroll avviene dentro il wrapper isolato, preservando la barra HTTP
+        document.getElementById('scrollWrapper').classList.add('scroll-allowed');
       }, 900);
-    });
+    }
+
+    // Collegamento dell'azione sia al sigillo che al link sottolineato
+    document.getElementById('openBtn').addEventListener('click', openEnvelope);
+    document.getElementById('openBtnLink').addEventListener('click', openEnvelope);
 
     // Modali Partecipo / Non Partecipo restano invariati
     const modalConfirm = document.getElementById('modalConfirm');
