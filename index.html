@@ -75,7 +75,7 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
-      filter: blur(22px) brightness(1.12); /* Aumentata la sfocatura e luminosità per più dissolvenza */
+      filter: blur(30px) brightness(0.95); /* MODIFICATO: Aumentato sfocatura per maggiore dissolvenza */
       z-index: -2;
     }
 
@@ -87,7 +87,7 @@
       width: 100vw;
       height: 100vh;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.18)), /* Incrementata la dissolvenza bianca sullo sfondo */
+        linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.50)), /* MODIFICATO: Aumentata l'opacità bianca (da 0.15/0.18) per sbiadire lo sfondo */
         url('sfondo.png');
       background-repeat: no-repeat;
       background-position: center top;
@@ -102,7 +102,7 @@
         background-color: var(--cream); 
       }
       body::before {
-        filter: blur(12px) brightness(1.12); 
+        filter: blur(18px) brightness(0.95); /* MODIFICATO: Uniformato anche per mobile */
       }
     }
 
@@ -111,7 +111,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.20; /* Ridotta l'opacità per una dissolvenza maggiore ma controllata */
+      opacity: 0.10; /* MODIFICATO: Ridotta l'opacità dei cerchi in movimento (da 0.20) per distrarre meno */
     }
 
     canvas#confetti-canvas {
@@ -332,10 +332,10 @@
       background: none;
       border: none;
       font-family: 'Cormorant SC', serif;
-      font-size: 0.72rem;
+      font-size: 0.65rem; /* MODIFICATO: Più piccolo (da 0.72rem) */
       color: var(--orange);
       text-decoration: underline;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.05em; /* MODIFICATO: Lettere molto più vicine (da 0.15em) */
       text-transform: uppercase;
       margin-top: 10px;
       cursor: pointer;
@@ -415,6 +415,7 @@
     .lp-line.f { width: 100% }
     .lp-line.m { width: 80% }
     .lp-line.s { width: 56% }
+    .lp-line.f { width: 100% }
     .lp-line.xs { width: 38% }
 
     .lp-footer {
@@ -700,7 +701,6 @@
     </div>
   </div>
 
-  <!-- NUOVO WRAPPER DI SCROLL: Isola il movimento impedendo al browser di nascondere la barra HTTP -->
   <div class="scroll-wrapper" id="scrollWrapper">
     <main class="card" id="card">
 
@@ -744,7 +744,7 @@
         <p class="env-caption">Hai ricevuto un invito speciale</p>
       </section>
 
-      <!-- INVITO  -->
+      <!-- INVITO -->
       <section class="content-screen" id="contentScreen">
         <div class="content-inner">
 
