@@ -5,10 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Save the Date – Gaetano & Rogena</title>
+  
+  <!-- FONT DI GOOGLE + AGGIUNTA LINK DIRETTO AL FILE FONT "BRILLIANT SIGNATURE" -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght=300;400;500;600;700&family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght=300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght=300;400;500;600;700&family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght=300;400;500;600&family=Pinyon+Script&display=swap"
     rel="stylesheet" />
+    
   <style>
+    /* IMPORTAZIONE DIRETTA DEL FILE .TTF DEL FONT DA WEB VIA CODICE */
+    @font-face {
+      font-family: 'Brilliant Signature';
+      src: url('https://db.onlinewebfonts.com/t/22cf1cdca438b813b2b812068ed106eb.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -413,6 +424,7 @@
     .lp-line.f { width: 100% }
     .lp-line.m { width: 80% }
     .lp-line.s { width: 56% }
+    .lp-line.f { width: 100% }
     .lp-line.xs { width: 38% }
 
     .lp-footer {
@@ -643,8 +655,15 @@
 
     /* ── MODALE REGALO — STILE BIGLIETTINO VERDE SALVIA ── */
     #modalGift .modal-box {
-      /* Sfumatura oscurata eliminando i picchi di bianco salendo */
-      background: linear-gradient(225deg, #cde2ca 0%, #b8d9b1 22%, #a3ce9a 45%, #8ebd84 68%, #79a26f 88%, #668b5d 100%);
+      background: linear-gradient(
+        225deg,
+        #c9ddc3 0%,
+        #c0d7ba 18%,
+        #92ae8d 38%,
+        #819f7c 58%,
+        #73916e 78%,
+        #668b5d 100%
+      );
       border: none;
       border-radius: 12px;
       padding: 0;
@@ -653,7 +672,7 @@
       width: 92%;
       position: relative;
       box-shadow: 0 24px 60px rgba(0,0,0,0.28);
-      min-height: 560px;
+      min-height: 580px;
     }
 
     #modalGift .modal-close {
@@ -696,94 +715,90 @@
       position: relative;
       z-index: 5;
       padding: 48px 36px 0 36px;
-      min-height: 560px;
+      min-height: 580px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
+    /* Inizio del testo ribassato rispetto ai fiori */
     .gift-top-text {
-      margin-top: 130px;
+      margin-top: 155px;
     }
 
     .gift-headline {
       font-family: 'Cormorant SC', serif;
-      /* Caratteri rimpiccioliti appena appena */
-      font-size: clamp(0.98rem, 3.8vw, 1.2rem);
+      font-size: clamp(0.90rem, 3.4vw, 1.1rem);
       font-weight: 400;
       color: #fff;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       text-align: center;
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       text-shadow: 0 1px 6px rgba(0,0,0,0.15);
     }
 
     .gift-sub-text {
       font-family: 'Cormorant SC', serif;
-      /* Caratteri rimpiccioliti appena appena */
-      font-size: clamp(0.82rem, 2.8vw, 0.98rem);
+      font-size: clamp(0.76rem, 2.5vw, 0.90rem);
       font-weight: 400;
       color: rgba(255,255,255,0.92);
       letter-spacing: 0.16em;
       text-transform: uppercase;
       text-align: center;
       line-height: 1.65;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       text-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
 
-    .gift-iban-block {
-      margin: 0 0 12px 0;
+    .gift-single-line-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
-    .gift-iban-label {
+    .gift-row-info {
       font-family: 'Cormorant SC', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.78);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .gift-iban-value {
-      font-family: 'Cormorant SC', serif;
-      font-size: clamp(0.82rem, 3.2vw, 1rem);
-      font-weight: 600;
+      font-size: clamp(0.68rem, 2.5vw, 0.85rem);
+      font-weight: 500;
       color: #fff;
-      letter-spacing: 0.05em;
-      word-break: break-all;
-      line-height: 1.5;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center;
       text-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
 
-    .gift-intestatario {
-      font-family: 'Cormorant SC', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.92);
-      text-transform: uppercase;
-      margin: 10px 0 24px;
+    .gift-row-info span {
+      color: rgba(255,255,255,0.8);
     }
 
+    /* Tasto copia distanziato appena più giù rispetto al testo dell'IBAN */
     .gift-copy-btn {
       background: rgba(255,255,255,0.18);
       border: 1px solid rgba(255,255,255,0.45);
       color: #fff;
       font-family: 'Cormorant SC', serif;
-      font-size: 0.78rem;
+      font-size: 0.70rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
-      padding: 10px 22px;
+      padding: 8px 18px;
       border-radius: 30px;
       cursor: pointer;
       transition: background 0.25s, border-color 0.25s;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 28px;
+      gap: 6px;
+      margin: 14px auto 20px auto; 
+    }
+
+    .gift-copy-btn svg {
+      width: 12px;
+      height: 12px;
     }
 
     .gift-copy-btn:hover {
@@ -796,14 +811,14 @@
     }
 
     .gift-grazie {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      font-style: italic;
-      font-weight: 300;
-      color: rgba(255,255,255,0.88);
+      /* Font collegato correttamente al web link di Brilliant Signature */
+      font-family: 'Brilliant Signature', cursive;
+      font-size: 3.2rem;
+      color: rgba(255,255,255,0.95);
       text-align: right;
-      padding: 0 8px 28px 0;
-      line-height: 1;
+      padding: 0 12px 20px 0;
+      line-height: 0.8;
+      text-transform: lowercase;
     }
 
     .contacts {
@@ -878,15 +893,16 @@
           <div class="gift-sub-text">Per chi volesse aiutarci<br>a realizzare il viaggio dei<br>nostri sogni…</div>
         </div>
 
-        <div>
-          <div class="gift-iban-block">
-            <div class="gift-iban-label">Iban</div>
-            <div class="gift-iban-value" id="ibanText">IT45H0306941725100000015052</div>
+        <div class="gift-single-line-wrap">
+          <div class="gift-row-info">
+            <span>Iban:</span> <span id="ibanText">IT45H0306941725100000015052</span>
           </div>
-          <div class="gift-intestatario">Intestatario: Rogena Bulku</div>
+          <div class="gift-row-info">
+            <span>Intestatario:</span> Rogena Bulku
+          </div>
 
           <button class="gift-copy-btn" id="copyIbanBtn" aria-label="Copia IBAN">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
+            <svg viewBox="0 0 24 24" fill="white">
               <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
             </svg>
             <span id="copyIbanBtnLabel">Copia IBAN</span>
