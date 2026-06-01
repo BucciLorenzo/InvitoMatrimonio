@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Save the Date – Gaetano & Rogena</title>
+  <title>Matrimonio – Gaetano & Rogena</title>
   
   <!-- FONT DI GOOGLE + AGGIUNTA LINK DIRETTO AL FILE FONT "BRILLIANT SIGNATURE" -->
   <link
@@ -132,18 +132,6 @@
       z-index: 1100; 
     }
 
-    .ribbon-envelope {
-      padding: 14px 0 6px;
-      font-size: 11px;
-      letter-spacing: .38em;
-      text-transform: uppercase;
-      color: var(--orange);
-      font-family: 'Cormorant SC', serif;
-      font-weight: 600;
-      text-align: center;
-      background: transparent;
-    }
-
     .card {
       position: relative;
       z-index: 1;
@@ -164,7 +152,7 @@
       border-radius: 4px;
       box-shadow: 0 30px 80px rgba(100, 50, 20, .12);
       overflow: hidden;
-      margin-top: 20px;
+      margin-top: 40px;
       margin-bottom: 40px; 
     }
 
@@ -190,7 +178,7 @@
     /* ── BUSTA ELEGANTE ── */
     .envelope-scene {
       max-width: 420px;
-      margin: 0 auto 12px;
+      margin: 40px auto 12px;
       padding: 0 24px
     }
 
@@ -464,43 +452,34 @@
     }
 
     /* ── CONTENUTO INVITO ── */
-    .content-inner { padding: 32px 32px 48px }
-
-    .script-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 6vw, 3.6rem);
-      font-style: italic;
-      font-weight: 300;
-      color: var(--orange);
-      line-height: 1.1;
-      margin-bottom: 6px
-    }
-
-    .announce {
-      font-size: .68rem;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 18px;
-      font-family: 'Cormorant SC', serif;
-    }
+    .content-inner { padding: 48px 32px 48px }
 
     .names {
-      font-family: 'Cormorant SC', serif;
-      font-size: clamp(1.8rem, 5.5vw, 3rem);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 6.5vw, 3.8rem);
+      font-style: italic;
       font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--text);
+      color: var(--orange);
       line-height: 1.1;
-      margin-bottom: 26px
+      margin-bottom: 20px;
     }
 
     .amp {
-      color: var(--orange);
-      font-style: italic;
-      font-weight: 300;
+      color: #000000;
+      font-style: normal;
+      font-weight: 400;
       font-family: 'Cormorant Garamond', serif;
+      margin: 0 6px;
+    }
+
+    .announce {
+      font-size: .78rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--textlt);
+      margin-bottom: 26px;
+      font-family: 'Cormorant SC', serif;
+      line-height: 1.8;
     }
 
     .gradient-rule {
@@ -552,7 +531,7 @@
       font-weight: 400;
       text-transform: none;
       font-style: italic;
-      margin-top: 14px;
+      margin-top: 18px;
       padding: 0 12px;
       font-family: 'Cormorant Garamond', serif;
     }
@@ -842,7 +821,7 @@
     }
 
     @media(max-width:560px) {
-      .content-inner { padding: 28px 18px 36px }
+      .content-inner { padding: 42px 18px 36px }
       .aBtn { width: 100%; text-align: center }
       .env-tri-left { border-right-width: 50vw; border-bottom-width: 33vw }
       .env-tri-right { border-left-width: 50vw; border-bottom-width: 33vw }
@@ -926,8 +905,6 @@
   <div class="scroll-wrapper" id="scrollWrapper">
     <main class="card" id="card">
 
-      <div class="ribbon-envelope">✦ Save the Date ✦</div>
-
       <section class="intro-screen" style="padding:0 24px 32px">
         <div class="envelope-scene">
           <div class="envelope" id="envelope">
@@ -968,9 +945,12 @@
       <section class="content-screen" id="contentScreen">
         <div class="content-inner">
 
-          <div class="script-title">save the date</div>
-          <div class="announce">annunciano il loro matrimonio</div>
           <div class="names">Gaetano <span class="amp">&</span> Rogena</div>
+
+          <div class="announce">
+            Siamo felici di annunciare il nostro matrimonio<br>
+            Unitevi a noi per celebrare uno dei giorni più belli della nostra vita
+          </div>
 
           <div class="divider">
             <div class="divider-line"></div>
@@ -979,18 +959,18 @@
           </div>
 
           <div>
-            <div class="info-line">Domenica 31 Maggio 2026</div>
-            <div class="info-line">Alle ore 11.30</div>
+            <div class="info-line">Lunedì 21 Settembre</div>
+            <div class="info-line">Alle ore 11:30</div>
             <br>
-            <div class="info-line small">Presso la Sala Ricevimenti</div>
-            <div class="info-line">Reggia dei Tessali</div>
-            <div class="info-line small">( S.da Statale 106 Jonica, 74013 Ginosa - TA )</div>
+            <div class="info-line small">Presso la sala ricevimenti</div>
+            <div class="info-line">Corte Bracco dei Germani</div>
+            <div class="info-line small">Corato (BA)</div>
             <br>
             <div class="info-line small">Dove al termine del rito celebrativo</div>
             <div class="info-line small">proseguiranno i festeggiamenti</div>
             <div class="info-line note">
-              È gradita gentile conferma entro il 30 aprile<br>
-              Specificare eventuali intolleranze o allergie
+              È gradita gentile conferma entro il 31 Luglio.<br>
+              Specificare eventuali intolleranze o allergie.
             </div>
           </div>
 
@@ -1001,7 +981,7 @@
           </div>
 
           <div class="btns">
-            <a class="aBtn outline" href="https://maps.google.com/maps?q=Reggia+dei+Tessali+Ginosa+Taranto"
+            <a class="aBtn outline" href="https://maps.app.goo.gl/qpUT4XV5sfRfziTD6?g_st=iw"
               target="_blank">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
                 style="display:inline;vertical-align:middle;margin-right:5px">
@@ -1017,13 +997,10 @@
             
             <button class="aBtn green" id="btnRegalo">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                style="display:inline;vertical-align:middle;margin-right:5px">
-                <rect x="2" y="9" width="20" height="13" rx="2" stroke="#fff" stroke-width="1.8" fill="none"/>
-                <path d="M8 9V7a4 4 0 0 1 8 0v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M12 13v4M10 15h4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M2 13h20" stroke="#fff" stroke-width="1.5"/>
+                style="display:inline;vertical-align:middle;margin-right:6px">
+                <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.5 2.5 0 0 0-5-0.5c0 .17.02.33.05.5H11c.03-.17.05-.33.05-0.5a2.5 2.5 0 0 0-5 0c0 .35.07.69.18 1H4c-1.1 0-2 .9-2 2v3c0 .55.45 1 1 1h1v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V12h1c.55 0 1-.45 1-1V8c0-1.1-.9-2-2-2zM14.5 4a1 1 0 0 1 1 1c0 .55-.45 1-1 1H13.1c-.06-.37-.06-.77 0-1.13.15-.5.48-.87.9-.87zm-6.1 1.13c.06.36.06.76 0 1.13H7c-.55 0-1-.45-1-1a1 1 0 0 1 1.9-.26zM4 8h7v3H4V8zm3 5h4v7H7v-7zm10 7h-4v-7h4v7zm3-9h-7V8h7v3z" fill="#ffffff"/>
               </svg>
-              Regalo
+              Un pensiero per noi 
             </button>
           </div>
 
