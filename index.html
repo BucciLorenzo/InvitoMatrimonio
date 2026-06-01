@@ -8,16 +8,17 @@
   
   <!-- FONT DI GOOGLE + AGGIUNTA LINK DIRETTO AL FILE FONT "BRILLIANT SIGNATURE" -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght=300;400;500;600;700&family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght=300;400;500;600&family=Pinyon+Script&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Raleway:wght@300;400;500;600&family=Pinyon+Script&family=Great+Vibes&display=swap"
     rel="stylesheet" />
     
   <style>
-    /* IMPORTAZIONE DIRETTA DEL FILE .TTF DEL FONT DA WEB VIA CODICE */
     @font-face {
       font-family: 'Brilliant Signature';
-      src: url('https://db.onlinewebfonts.com/t/22cf1cdca438b813b2b812068ed106eb.ttf') format('truetype');
+      src: local('Brilliant Signature'),
+           url('./Brilliant_-_Personal_Use.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
+      font-display: swap;
     }
 
     * {
@@ -452,6 +453,16 @@
       font-family: 'Cormorant SC', serif;
     }
 
+    /* ── COMPONENTE GRAFICO PER LA SCRITTA GRAZIE ── */
+    .gift-grazie-img {
+      display: block;
+      max-width: 150px;
+      width: 40%;
+      height: auto;
+      margin: 0 12px 20px auto;
+      opacity: 0.90;
+    }
+
     /* ── CONTENUTO INVITO ── */
     .content-inner { padding: 32px 32px 48px }
 
@@ -490,6 +501,14 @@
       font-style: italic;
       font-weight: 300;
       font-family: 'Cormorant Garamond', serif;
+    }
+
+    .gradient-rule {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--orange), transparent);
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto 24px
     }
 
     .divider {
@@ -810,17 +829,6 @@
       border-color: rgba(255,255,255,0.7);
     }
 
-    .gift-grazie {
-      /* Font collegato correttamente al web link di Brilliant Signature */
-      font-family: 'Brilliant Signature', cursive;
-      font-size: 3.2rem;
-      color: rgba(255,255,255,0.95);
-      text-align: right;
-      padding: 0 12px 20px 0;
-      line-height: 0.8;
-      text-transform: lowercase;
-    }
-
     .contacts {
       display: flex;
       justify-content: space-between;
@@ -857,7 +865,7 @@
   <div class="overlay-modal" id="modalConfirm">
     <div class="modal-box">
       <button class="modal-close" id="closeConfirmBtn">×</button>
-      <div class="modal-title">Invia la tua Conferma</div>
+      <div class="modal-title">Invia la tua Confirmation</div>
       <div class="modal-desc">Scegli a chi inviare il messaggio di conferma su WhatsApp:</div>
       <div class="modal-channels">
         <a class="sub-channel-btn confirm-btn" id="confermaGaetano" href="#" target="_blank">Invia a Gaetano 🤵‍♂️</a>
@@ -909,7 +917,8 @@
           </button>
         </div>
 
-        <div class="gift-grazie">grazie</div>
+        <!-- Richiamo all'immagine locale grazie.png -->
+        <img src="grazie.png" alt="Grazie" class="gift-grazie-img" />
       </div>
     </div>
   </div>
